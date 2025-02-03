@@ -6,6 +6,7 @@ const app = express();
 const PORT = 5000;
 
 app.use(cors());
+app.use(express.json());
 
 // PostgreSQL connection configuration
 const pool = new Pool({
@@ -33,6 +34,33 @@ app.get('/api/quotes', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+  app.post('/api/quotes', async (req, res) => {
+    try {
+      // Extract data from the request body
+      const { quotecontent, author, quoteyear } = req.body;
+  
+      // Validate the required fields
+      if (!quotecontent) {
+        return res.status(400).json({ error: 'Missing Quote Content' });
+      }
+  
+      // Insert the new row into the database
+      const query = `
+        INSERT INTO quotes (quotecontent, author, quoteyear)
+        VALUES ($1, $2, $3)
+        RETURNING *;`; // Return the inserted row
+  
+      const { rows } = await pool.query(query, [quotecontent, author, quoteyear]);
+  
+      // Send the inserted row as a JSON response
+      res.status(201).json(rows[0]);
+    } catch (err) {
+      console.error('Error executing query', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
 
 
 app.listen(PORT, () => {

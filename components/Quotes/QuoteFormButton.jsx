@@ -2,22 +2,23 @@ import React, { useState } from 'react';
 
 const QuoteFormButton = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [content, setContent] = useState('');
+  const [quotecontent, setContent] = useState('');
   const [author, setAuthor] = useState('');
-  const [year, setYear] = useState('');
+  const [quoteyear, setYear] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newQuote = { content, author, year: parseInt(year) };
+    const newQuote = { quotecontent, author, quoteyear: parseInt(quoteyear) };
 
     try {
+      console.log(JSON.stringify(newQuote));
       const response = await fetch('http://localhost:5000/api/quotes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newQuote),
+        body: JSON.stringify(newQuote)
       });
 
       if (response.ok) {
@@ -54,7 +55,7 @@ const QuoteFormButton = () => {
             <input
               type="text"
               id="content"
-              value={content}
+              value={quotecontent}
               onChange={(e) => setContent(e.target.value)}
               required
             />
@@ -66,7 +67,6 @@ const QuoteFormButton = () => {
               id="author"
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
-              required
             />
           </div>
           <div style = {{overflow:'hidden'}}>
@@ -74,9 +74,8 @@ const QuoteFormButton = () => {
             <input
               type="number"
               id="year"
-              value={year}
+              value={quoteyear}
               onChange={(e) => setYear(e.target.value)}
-              required
             />
           </div>
           <button type="submit"  style = {{gridColumn: 'span 2'}}>Submit</button>
