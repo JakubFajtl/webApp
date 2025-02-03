@@ -17,7 +17,7 @@ const pool = new Pool({
     port: 5432, // Default PostgreSQL port
   });
 
-app.get('/api', (req, res) => {
+app.get('/api',(req, res) => {
   res.json({ message: 'Hello from the backend!' });
 });
 
@@ -63,6 +63,6 @@ app.get('/api/quotes', async (req, res) => {
   
 
 
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0',() => {
   console.log(`Server is running on http://0.0.0.0:${PORT}`);
 });
