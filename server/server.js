@@ -12,7 +12,7 @@ app.use(express.json());
 const pool = new Pool({
     user: 'postgres', // Replace with your PostgreSQL username
     host: 'localhost', // Replace with your database host
-    database: 'webappDB', // Replace with your database name
+    database: 'webappdb', // Replace with your database name
     password: 'kuba', // Replace with your database password
     port: 5432, // Default PostgreSQL port
   });
