@@ -1,33 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Quote from './Quote';
 
-const QuoteContainer = () => {
-  // State to store the quotes
-  const [quotes, setQuotes] = useState([]);
-  // State to handle loading and error states
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // Fetch quotes from the backend API
-  useEffect(() => {
-    const fetchQuotes = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/quotes');
-        if (!response.ok) {
-          throw new Error('Failed to fetch quotes');
-        }
-        const data = await response.json();
-        setQuotes(data); // Update the state with the fetched quotes
-      } catch (err) {
-        setError(err.message); // Set error state if something goes wrong
-      } finally {
-        setLoading(false); // Set loading to false after the request completes
-      }
-    };
-
-    fetchQuotes();
-  }, []); // Empty dependency array ensures this runs only once on mount
-
+const QuoteContainer = ({ quotes, loading, error }) => {
   // Display loading state
   if (loading) {
     return <div style={styles.loading}>Loading quotes...</div>;
@@ -41,12 +15,12 @@ const QuoteContainer = () => {
   // Display quotes
   return (
     <div style={styles.container}>
-      {quotes.map((quote, index) => (
+      {quotes.map((quote) => (
         <Quote
           key={quote.id}
-          quote={quote.quotecontent} 
+          quote={quote.quotecontent}
           author={quote.author}
-          year={quote.quoteyear} 
+          year={quote.quoteyear}
         />
       ))}
     </div>

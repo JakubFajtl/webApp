@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const QuoteFormButton = () => {
+const QuoteFormButton = ({ addQuote }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [quotecontent, setContent] = useState('');
   const [author, setAuthor] = useState('');
@@ -12,17 +12,18 @@ const QuoteFormButton = () => {
     const newQuote = { quotecontent, author, quoteyear: parseInt(quoteyear) };
 
     try {
-      console.log(JSON.stringify(newQuote));
-      const response = await fetch('http://localhost:5000/api/quotes', {
+      const response = await fetch('http://192.168.1.108:5000/api/quotes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newQuote)
+        body: JSON.stringify(newQuote),
       });
 
       if (response.ok) {
-        alert('Quote submitted successfully!');
+        const addedQuote = await response.json();
+        addQuote(addedQuote); // Add the new quote to the state
+        //alert('Quote submitted successfully!');
         setContent('');
         setAuthor('');
         setYear('');
@@ -35,23 +36,24 @@ const QuoteFormButton = () => {
       alert('An error occurred while submitting the quote.');
     }
   };
-  
+
   const styles = {
     display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)', /* Two equal columns */
-  gridTemplateRows: 'auto auto', /* Two rows */
-  gap: '16px', /* Space between grid items */
-
-  }
+    gridTemplateColumns: 'repeat(2, 1fr)', // Two equal columns
+    gridTemplateRows: 'auto auto', // Two rows
+    gap: '16px', // Space between grid items
+  };
 
   return (
     <div>
       {!isFormVisible ? (
         <button onClick={() => setIsFormVisible(true)}>Add Quote</button>
       ) : (
-        <form onSubmit={handleSubmit} style = {styles}>
-          <div style = {{gridColumn: 'span 2', overflow:'hidden'}}>
-            <label htmlFor="content" style = {{textAlign: 'left'}}>Content:</label>
+        <form onSubmit={handleSubmit} style={styles}>
+          <div style={{ gridColumn: 'span 2', overflow: 'hidden' }}>
+            <label htmlFor="content" style={{ textAlign: 'left' }}>
+              Content:
+            </label>
             <input
               type="text"
               id="content"
@@ -60,8 +62,10 @@ const QuoteFormButton = () => {
               required
             />
           </div>
-          <div style = {{overflow:'hidden'}}>
-            <label htmlFor="author" style = {{textAlign: 'left'}}>Author:</label>
+          <div style={{ overflow: 'hidden' }}>
+            <label htmlFor="author" style={{ textAlign: 'left' }}>
+              Author:
+            </label>
             <input
               type="text"
               id="author"
@@ -69,8 +73,10 @@ const QuoteFormButton = () => {
               onChange={(e) => setAuthor(e.target.value)}
             />
           </div>
-          <div style = {{overflow:'hidden'}}>
-            <label htmlFor="year" style = {{textAlign: 'left'}}>Year:</label>
+          <div style={{ overflow: 'hidden' }}>
+            <label htmlFor="year" style={{ textAlign: 'left' }}>
+              Year:
+            </label>
             <input
               type="number"
               id="year"
@@ -78,7 +84,9 @@ const QuoteFormButton = () => {
               onChange={(e) => setYear(e.target.value)}
             />
           </div>
-          <button type="submit"  style = {{gridColumn: 'span 2'}}>Submit</button>
+          <button type="submit" style={{ gridColumn: 'span 2' }}>
+            Submit
+          </button>
         </form>
       )}
     </div>
