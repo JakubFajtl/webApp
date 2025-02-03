@@ -4,7 +4,8 @@ const Quote = ({ quote, author, year }) => {
   return (
     <div style={styles.quoteContainer}>
       <p style={styles.quoteText}>"{quote}"</p>
-      <p style={styles.quoteAuthor}>- {author}{year == null?"":", "}{year}</p>
+      {author?<p style={styles.quoteAuthor}>- {author}{year?", ":""}{year}</p>:""}
+      
 
       {/* <p style={styles.quoteYear}>{year}</p> */}
     </div>
@@ -27,7 +28,8 @@ const styles = {
     fontSize: '1.5rem',
     fontStyle: 'italic',
     color: '#333',
-    margin: '0 0 10px 0',
+    margin: '0 0 0 0',
+    //margin: '0 0 10px 0',
   },
   quoteAuthor: {
     fontSize: '1.2rem',
