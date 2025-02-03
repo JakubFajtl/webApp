@@ -12,7 +12,7 @@ const QuoteFormButton = ({ addQuote }) => {
     const newQuote = { quotecontent, author, quoteyear: parseInt(quoteyear) };
 
     try {
-      const response = await fetch('http://192.168.1.108:5000/api/quotes', {
+      const response = await fetch(`http://${__MY_LOCAL_IP__}:5000/api/quotes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

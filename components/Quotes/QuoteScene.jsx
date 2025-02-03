@@ -11,7 +11,7 @@ const QuoteScene = () => {
   useEffect(() => {
     const fetchQuotes = async () => {
       try {
-        const response = await fetch('http://192.168.1.108:5000/api/quotes');
+        const response = await fetch(`http://${__MY_LOCAL_IP__}:5000/api/quotes`);
         if (!response.ok) {
           throw new Error('Failed to fetch quotes');
         }
