@@ -17,7 +17,6 @@ const QuoteContainer = () => {
           throw new Error('Failed to fetch quotes');
         }
         const data = await response.json();
-        console.log(data);
         setQuotes(data); // Update the state with the fetched quotes
       } catch (err) {
         setError(err.message); // Set error state if something goes wrong
@@ -45,9 +44,9 @@ const QuoteContainer = () => {
       {quotes.map((quote, index) => (
         <Quote
           key={quote.id}
-          quote={quote.quotecontent} // Use 'quote.quote' to match the backend response
+          quote={quote.quotecontent} 
           author={quote.author}
-          year={quote.quoteyear} // Assuming 'year' is part of the quote object
+          year={quote.quoteyear} 
         />
       ))}
     </div>
