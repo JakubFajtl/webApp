@@ -1,10 +1,12 @@
 import React from 'react';
 import QuoteContainer from './QuoteContainer';
+import QuoteFormButton from './QuoteFormButton';
 
 const QuoteScene = ({ quotes }) => {
   return (
     <div style={styles.scene}>
       <QuoteContainer quotes={quotes} />
+      <QuoteFormButton />
     </div>
   );
 };

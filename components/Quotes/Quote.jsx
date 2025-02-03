@@ -15,7 +15,7 @@ const Quote = ({ quote, author, year }) => {
 const styles = {
   quoteContainer: {
     textAlign: 'center',
-    margin: '20px 0',
+    margin: '20px 0 0 0',
     padding: '20px',
     borderLeft: '4px solid #333',
     backgroundColor: '#f9f9f9',
